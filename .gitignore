@@ -1,0 +1,18 @@
+# CubeIDE derleme klasorleri
+Debug/
+Release/
+
+# Derleme ciktilari
+*.o
+*.d
+*.elf
+*.map
+*.list
+*.su
+*.cyclo
+*.bin
+*.hex
+
+# CubeIDE calisma alani ve kisisel ayarlar
+.metadata/
+*.launch
