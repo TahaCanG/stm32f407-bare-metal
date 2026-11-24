@@ -3,6 +3,16 @@
 #include<stdio.h>
 
 
+#define LED_GREEN (12)
+#define LED_ORANGE (13)
+#define LED_RED (14)
+#define LED_BLUE (15)
+#define DELAY_COUNT (500000)
+#define RCC_AHB1ENR_GPIODEN  (1UL<<3)
+
+
+
+
 uint32_t volatile *pCLKBaseOff=(uint32_t*)0x40023830 ; //RCC_AHB1ENR BASE+OFFSET
 uint32_t volatile *pModAddress=(uint32_t*)0x40020C00; //GPIOD MODER ADRESS
 uint32_t volatile *pOdrAddress=(uint32_t*)0x40020C14;// GPIOD MODER+ODR ADRESS (ODR IS OFFSET)
@@ -10,7 +20,7 @@ uint32_t volatile *pOdrAddress=(uint32_t*)0x40020C14;// GPIOD MODER+ODR ADRESS (
 
 void led_init(void)
 {
-	 *pCLKBaseOff |= (1UL<<3);  // Enable GPIOD clock (RCC_AHB1ENR, bit 3)
+	 *pCLKBaseOff |=  RCC_AHB1ENR_GPIODEN ; // Enable GPIOD clock (RCC_AHB1ENR, bit 3)
 
 
 	 *pModAddress &= ~(3UL<<24); // Clear PD12 mode bits
@@ -60,30 +70,30 @@ int main(void)
 	led_init();
 	while(1)
 	{
-		for(uint8_t pin=12;pin<=15;pin++)
+		for(uint8_t pin=LED_GREEN;pin<=LED_BLUE;pin++)
 		{
 
 			led_on(pin);
-			delay(500000);
+			delay(DELAY_COUNT);
 			led_off(pin);
 
 		}
 
-		for(uint8_t pin=12;pin<=15;pin++)
+		for(uint8_t pin=LED_GREEN;pin<=LED_BLUE;pin++)
 		{
 			led_on(pin);
 
 
 		}
-		delay(500000);
+		delay(DELAY_COUNT);
 
-		for(uint8_t pin=12;pin<=15;pin++)
+		for(uint8_t pin=LED_GREEN;pin<=LED_BLUE;pin++)
 				{
 					led_off(pin);
 
 
 				}
-		delay(500000);
+		delay(DELAY_COUNT);
 
 
 
